@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class num3 {
     public static void main(String[] args){
+        System.out.println("asd");
         Scanner sc = new Scanner(System.in);
         System.out.println("Укажите размер массива:");
         int n = sc.nextInt();
