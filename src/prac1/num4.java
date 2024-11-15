@@ -6,10 +6,19 @@ public class num4 {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         System.out.println("Укажите размер массива: ");
-        int n = sc.nextInt();
+        int n;
+        while (!sc.hasNextInt()){
+            System.out.println("Введите целое число:");
+            sc.next();
+        }
+        n = sc.nextInt();
         int arr[] = new int[n];
         System.out.println("Введите " + n + " элементов массива");
         for (int i = 0; i < n; i++) {
+            while (!sc.hasNextInt()){
+                System.out.println("Введите целое число");
+                sc.next();
+            }
             arr[i] = sc.nextInt();
         }
         int fl = 0, sum = 0;

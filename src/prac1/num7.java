@@ -21,6 +21,10 @@ public class num7 {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         System.out.println("Введите число для вычисления факториала: ");
+        while (!sc.hasNextInt()){
+            System.out.println("Введите целое число");
+            sc.next();
+        }
         int number = sc.nextInt();
         long res = factorial(number);
         System.out.println("Факториал " + number + " равен " + res);
