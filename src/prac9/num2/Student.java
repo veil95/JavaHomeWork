@@ -1,4 +1,4 @@
-package prac9.num3;
+package prac9.num2;
 
 public class Student implements Comparable<Student>{
     private String name;
@@ -9,9 +9,6 @@ public class Student implements Comparable<Student>{
         this.gpa = gpa;
     }
 
-    public int getGpa() {
-        return gpa;
-    }
     @Override
     public int compareTo(Student other){
         return Integer.compare(this.gpa, other.gpa);

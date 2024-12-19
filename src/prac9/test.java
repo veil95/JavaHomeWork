@@ -1,3 +1,5 @@
+package prac9;
+
 public class test {
     public static void selectionSort(Comparable[] list) {
         int min;
@@ -19,7 +21,7 @@ public class test {
     }
 
     public static void main(String[] args) {
-        Integer[] array = {5, 3, 8, 1, 2, 7}; // Массив Integer, который реализует Comparable
+        Integer[] array = {5, 3, 8, 1, 2, 7};
         System.out.println("До сортировки:");
         for (Integer num : array) {
             System.out.print(num + " ");

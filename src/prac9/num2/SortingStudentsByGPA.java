@@ -1,4 +1,4 @@
-package prac9.num3;
+package prac9.num2;
 
 public class SortingStudentsByGPA {
     public static void quickSort(Student[] arr, int low, int high){
@@ -26,10 +26,10 @@ public class SortingStudentsByGPA {
     }
     public static void main(String [] args){
         Student[] students = {
-                new Student("Alice", 3),
-                new Student("Bob", 4),
-                new Student("Charlie", 2),
-                new Student("David", 5)
+                new Student("слоняра", 3),
+                new Student("степашка", 4),
+                new Student("поздняк", 2),
+                new Student("чопикс", 5)
         };
         for (Student student : students){
             System.out.println(student);

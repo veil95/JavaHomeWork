@@ -14,11 +14,11 @@ public class Test {
     }
     public static void main(String [] args){
         Student[] students = {
-                new Student(3, "Andruxa"),
-                new Student(1, "VOLODYA"),
-                new Student(5, "Slavik"),
-                new Student(2, "Tolik"),
-                new Student(4, "Serega")
+                new Student(3, "чиловый парень"),
+                new Student(1, "андрюха"),
+                new Student(5, "толян"),
+                new Student(2, "мансур"),
+                new Student(4, "ванюха")
         };
         for (Student student : students){
             System.out.println(student);

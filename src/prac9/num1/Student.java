@@ -13,12 +13,8 @@ public class Student implements Comparable<Student> {
         return name;
     }
 
-    public int getiDNumber() {
-        return iDNumber;
-    }
     @Override
     public int compareTo(Student other){
-
         return Integer.compare(this.iDNumber, other.iDNumber);
     }
     @Override

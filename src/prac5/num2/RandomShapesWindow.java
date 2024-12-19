@@ -24,7 +24,6 @@ public class RandomShapesWindow {
             }
         }
 
-        // Создаем окно
         JFrame frame = new JFrame("Random Shapes");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 500);
