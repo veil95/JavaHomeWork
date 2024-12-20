@@ -13,6 +13,7 @@ public class AdvancedCalculatorApp {
 
 class CalculatorFrame extends JFrame {
     private JTextField displayField;
+    private boolean operationSelected = false;
 
     public CalculatorFrame() {
         setTitle("Advanced Calculator");
@@ -20,17 +21,15 @@ class CalculatorFrame extends JFrame {
         setSize(400, 200);
         setLayout(new BorderLayout());
 
-        // Поле для ввода выражения
         displayField = new JTextField();
         displayField.setFont(new Font("Arial", Font.BOLD, 24));
         displayField.setHorizontalAlignment(JTextField.RIGHT);
+        displayField.setEditable(false); // Отключаем ручной ввод
         add(displayField, BorderLayout.NORTH);
 
-        // Панель для кнопок
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(4, 4, 5, 5));
 
-        // Добавление кнопок цифр, операций и символов
         String[] buttons = {
                 "7", "8", "9", "/",
                 "4", "5", "6", "*",
@@ -45,10 +44,12 @@ class CalculatorFrame extends JFrame {
             buttonPanel.add(button);
         }
 
-        // Кнопка очистки
         JButton clearButton = new JButton("C");
         clearButton.setFont(new Font("Arial", Font.BOLD, 20));
-        clearButton.addActionListener(e -> displayField.setText(""));
+        clearButton.addActionListener(e -> {
+            displayField.setText("");
+            operationSelected = false;
+        });
         add(clearButton, BorderLayout.SOUTH);
 
         add(buttonPanel, BorderLayout.CENTER);
@@ -57,35 +58,50 @@ class CalculatorFrame extends JFrame {
         setVisible(true);
     }
 
-    // Обработчик для нажатий кнопок
     private class ButtonClickListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             JButton source = (JButton) e.getSource();
             String buttonText = source.getText();
 
-            if (buttonText.equals("=")) {
+            if (buttonText.matches("[+\\-*/]")) {
+                if (operationSelected) {
+                    return;
+                }
+                displayField.setText(displayField.getText() + buttonText);
+                operationSelected = true;
+            } else if (buttonText.equals(".")) {
+                String currentText = displayField.getText();
+                if (currentText.isEmpty() || currentText.endsWith("+") || currentText.endsWith("-")
+                        || currentText.endsWith("*") || currentText.endsWith("/")) {
+                    displayField.setText(displayField.getText() + "0.");
+                } else if (!getLastNumber(currentText).contains(".")) {
+                    displayField.setText(displayField.getText() + ".");
+                }
+            } else if (buttonText.equals("=")) {
                 calculateExpression();
+                operationSelected = false;
             } else {
                 displayField.setText(displayField.getText() + buttonText);
+                operationSelected = false;
             }
         }
     }
 
-    // Метод вычисления выражения
+    private String getLastNumber(String expression) {
+        String[] parts = expression.split("[+\\-*/]");
+        return parts[parts.length - 1]; // Возвращает последнее число
+    }
+
     private void calculateExpression() {
         String expression = displayField.getText();
 
         try {
-            // Обработка случаев с двойными минусами
             expression = expression.replace("--", "+");
 
-            // Вычисление результата
             double result = evaluate(expression);
 
-            // Проверка на ошибку (NaN)
             if (Double.isNaN(result)) {
-                // Если произошла ошибка, выводим сообщение и завершаем
                 return;
             }
 
@@ -95,20 +111,14 @@ class CalculatorFrame extends JFrame {
         }
     }
 
-
-    // Метод для вычисления выражения
     private double evaluate(String expression) {
-        // Удаляем пробелы для удобства
         expression = expression.replaceAll("\\s+", "");
-
-        // Парсер для обработки операций +, -, *, /
         return parseExpression(expression);
     }
 
-    // Парсер для обработки арифметических операций
     private double parseExpression(String expression) {
-        String[] terms = expression.split("(?=[+-])"); // Разделяем по "+" и "-"
-        double result = parseTerm(terms[0]); // Вычисляем первый термин
+        String[] terms = expression.split("(?=[+-])");
+        double result = parseTerm(terms[0]);
 
         for (int i = 1; i < terms.length; i++) {
             String term = terms[i];
@@ -122,34 +132,31 @@ class CalculatorFrame extends JFrame {
         return result;
     }
 
-    // Обработка умножения и деления
     private double parseTerm(String term) {
-        // Разделяем на части, учитывая "*" и "/"
         String[] factors = term.split("[*/]");
-        double result = parseFactor(factors[0]); // Вычисляем первый фактор
+        double result = parseFactor(factors[0]);
 
-        int factorIndex = factors[0].length(); // Начальный индекс для поиска операторов
+        int factorIndex = factors[0].length();
         for (int i = 1; i < factors.length; i++) {
-            char operator = term.charAt(factorIndex); // Определяем оператор (* или /)
+            char operator = term.charAt(factorIndex);
             double value = parseFactor(factors[i]);
 
             if (operator == '*') {
                 result *= value;
             } else if (operator == '/') {
                 if (value == 0) {
-                    displayField.setText("Hello World!");
-                    return Double.NaN; // Возвращаем NaN, чтобы остановить вычисления
+                    displayField.setText("Division by zero error!");
+                    return Double.NaN;
                 }
                 result /= value;
             }
 
-            // Обновляем индекс для следующего оператора
-            factorIndex += factors[i].length() + 1; // Длина текущего фактора + 1 (для оператора)
+            factorIndex += factors[i].length() + 1;
         }
 
         return result;
     }
-    // Парсер для числа
+
     private double parseFactor(String factor) {
         return Double.parseDouble(factor);
     }

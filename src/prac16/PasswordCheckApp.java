@@ -35,7 +35,7 @@ class PasswordCheckFrame extends JFrame {
         add(passwordField);
         add(confirmPasswordLabel);
         add(confirmPasswordField);
-        add(new JLabel()); // Placeholder for alignment
+        add(new JLabel());
         add(submitButton);
 
         submitButton.addActionListener(new ActionListener() {

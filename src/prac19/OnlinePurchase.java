@@ -27,7 +27,7 @@ public class OnlinePurchase {
 
     private static void validateINN(String inn) throws InvalidINNException {
         if (inn.length() != 12 || !inn.matches("\\d+")) {
-            throw new InvalidINNException("Invalid INN: INN должен состоять из 12 цифр.");
+            throw new InvalidINNException("Invalid INN: INN должен состоять из 12 цифр и состоять только из цифр.");
         }
     }
 }
