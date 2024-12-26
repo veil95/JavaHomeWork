@@ -2,7 +2,7 @@ package prac17.num_6;
 
 public class Main {
     public static void main(String[] args) {
-        CyclicDoubleLinkedList list = new CyclicDoubleLinkedList();
+        CyclingDoubleLinkedList list = new CyclingDoubleLinkedList();
 
         list.add("apple");
         list.add("banana");
